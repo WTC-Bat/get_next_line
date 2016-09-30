@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft.h"
 
 static char	*read_line(const int fd, int *status, int *exlen)
 {
