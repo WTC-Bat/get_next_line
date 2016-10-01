@@ -4,5 +4,3 @@
 a.out
 *.a
 *.o
-./desert
-./gnl_main.c
