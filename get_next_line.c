@@ -17,7 +17,6 @@ static char	*read_line(const int fd, int *status, int *exlen)
 	void	*b;
 	char	*s;
 
-	//b = (char *)malloc(sizeof(char));
 	s = ft_strnew(0);
 	*exlen = 0;
 	while (*(char *)b != '\n')
@@ -31,8 +30,8 @@ static char	*read_line(const int fd, int *status, int *exlen)
 			*status = 0;
 			return (NULL);
 		}
-		//free(b);
 	}
+	ft_memdel(&b);
 	return (s);
 }
 
