@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlower.c                                      :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/06 13:10:20 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/06/06 13:11:21 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/09 13:18:38 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/11 14:56:39 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strlower(char const *str)
+void	ft_bzero(char *s, size_t n)
 {
-	char	*out_str;
-	int		cnt;
-
-	out_str = NULL;
-	cnt = 0;
-	out_str = (char *)malloc(sizeof(str));
-	while (str[cnt] != '\0')
+	while (n != 0)
 	{
-		if (ft_isupper(str[cnt]))
-			out_str[cnt] = ft_tolower(str[cnt]);
-		else
-			out_str[cnt] = str[cnt];
-		cnt++;
+		*s = 0;
+		s++;
+		n--;
 	}
-	out_str[cnt] = '\0';
-	return (out_str);
 }

@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_islower.c                                       :+:      :+:    :+:   */
+/*   ft_strnequ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/09 09:29:15 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/09 09:30:29 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/15 15:04:31 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/15 15:04:34 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_islower(int c)
+#include "libft.h"
+
+int		ft_strnequ(char const *s1, char const *s2, size_t n)
 {
-	if (c >= 97 && c <= 122)
-		return (1);
-	else
-		return (0);
+	size_t	cnt;
+
+	cnt = 0;
+	while (cnt < n)
+	{
+		if (s1[cnt] != s2[cnt])
+			return (0);
+		cnt++;
+	}
+	return (1);
 }

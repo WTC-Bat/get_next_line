@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/15 15:09:22 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/15 15:09:39 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/17 13:02:48 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/06/07 14:35:08 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	ft_putendl(char const *s)
-{
-	if (s)
-	{
-		while (*s)
-			ft_putchar(*s++);
-		ft_putchar('\n');
-	}
-}
+# include "libft/libft.h"
+
+# define BUFF_SIZE 32
+
+int		get_next_line(const int fd, char **line);
+
+#endif

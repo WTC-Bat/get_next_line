@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/15 15:09:22 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/15 15:09:39 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/15 15:03:48 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/15 15:03:53 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putendl(char const *s)
+int		ft_strequ(char const *s1, char const *s2)
 {
-	if (s)
+	int		cnt;
+
+	cnt = 0;
+	while (s1[cnt])
 	{
-		while (*s)
-			ft_putchar(*s++);
-		ft_putchar('\n');
+		if (s1[cnt] != s2[cnt])
+			return (0);
+		cnt++;
 	}
+	return (1);
 }

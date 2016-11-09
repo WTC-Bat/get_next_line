@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrev.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/03 14:07:34 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/06/03 14:35:59 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/10 13:55:44 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/10 15:47:26 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrev(char const *str)
+void	*ft_memmove(void *dst, void *src, size_t len)
 {
-	char	*revstring;
-	int		cnt;
-	int		len;
+	unsigned char	*d;
+	unsigned char	*s;
 
-	cnt = 0;
-	len = ft_strlen(str) - 1;
-	revstring = (char *)malloc(sizeof(char) * len + 1);
-	while (len != 0)
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	if (d > s)
 	{
-		revstring[cnt] = str[len];
-		len--;
-		cnt++;
+		d += len;
+		s += len;
+		while (len-- != 0)
+			*--d = *--s;
 	}
-	revstring[cnt++] = str[0];
-	revstring[cnt] = '\0';
-	return (revstring);
+	else
+	{
+		while (len-- != 0)
+			*d++ = *s++;
+	}
+	return (dst);
 }

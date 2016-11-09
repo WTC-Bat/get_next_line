@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/15 15:09:22 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/15 15:09:39 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/15 15:18:41 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/15 15:18:44 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl(char const *s)
+char	*ft_itoa(int n)
 {
-	if (s)
+	char	*c;
+
+	c = (char *)malloc(sizeof(char *));
+	if (n >= 0)
 	{
-		while (*s)
-			ft_putchar(*s++);
-		ft_putchar('\n');
+		while (n != 0)
+		{
+			c--;
+			*c = '0' + (n % 10);
+			n = n / 10;
+		}
 	}
+	else
+	{
+		while (n != 0)
+		{
+			c--;
+			*c = '0' - (n % 10);
+			n = n / 10;
+		}
+		*--c = '-';
+	}
+	return (c);
 }

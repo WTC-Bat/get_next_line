@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/15 15:09:22 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/15 15:09:39 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/09 10:22:12 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/09 10:22:31 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl(char const *s)
+int		ft_strncmp(char const *s1, char const *s2, size_t n)
 {
-	if (s)
+	size_t		cnt;
+
+	cnt = 0;
+	while (cnt < n)
 	{
-		while (*s)
-			ft_putchar(*s++);
-		ft_putchar('\n');
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		else if (*s1 == '\0')
+			return (0);
+		s1++;
+		s2++;
+		cnt++;
 	}
+	return (0);
 }

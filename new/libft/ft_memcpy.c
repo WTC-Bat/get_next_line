@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/15 15:09:22 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/15 15:09:39 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/10 17:33:00 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/15 15:19:54 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl(char const *s)
+void	*ft_memcpy(void *dst, void *src, size_t n)
 {
-	if (s)
+	char	*d;
+	char	*s;
+
+	d = (char *)dst;
+	s = (char *)src;
+	while (n != 0)
 	{
-		while (*s)
-			ft_putchar(*s++);
-		ft_putchar('\n');
+		*d = *s;
+		d++;
+		s++;
+		n--;
 	}
+	return (dst);
 }

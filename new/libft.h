@@ -6,7 +6,7 @@
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/09 11:00:25 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/15 16:39:26 by mvanwyk          ###   ########.fr       */
+/*   Updated: 2016/06/03 14:11:50 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+char	*ft_appendc(char *str, int c);
 char	*ft_itoa(int n);
+char	*ft_itobase(int n, int base);
+char	*ft_prependc(char *str, int c);
 char	*ft_strcat(char *dest, char *src);
 char	*ft_strchr(char *s, int c);
 char	*ft_strcmp(char *s1, char *s2);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strdup(char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strlower(char const *str);
 char	*ft_strmap(char const *s, char (*f)(char));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strncat(char *dest, char *src, int nb);
@@ -30,18 +34,23 @@ char	*ft_strncpy(char *dest, char *src, size_t n);
 char	*ft_strnew(size_t size);
 char	*ft_strnstr(char *big, char *little, size_t len);
 char	*ft_strrchr(char *s, int c);
+char	*ft_strrev(char const *str);
 char	**ft_strsplit(char const *s, char c);
 char	*ft_strstr(char *str, char *to_find);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s);
+char	*ft_strupper(char const *str);
 char	ft_tolower(int c);
 char	ft_toupper(int c);
 int		ft_atoi(char *str);
+int		ft_indexof(char const *str, int c);
+int		ft_lindexof(char const *str, int c);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_islower(int c);
+int		ft_isnegative(int n);
 int		ft_isupper(int c);
 int		ft_isprint(int c);
 int		ft_memcmp(void *s1, void *s2, size_t n);
@@ -50,7 +59,8 @@ int		ft_strncmp(char const *s1, char const*s2, size_t n);
 int		ft_strnequ(char const *s1, char const *s2, size_t n);
 size_t	ft_strlcat(char *dst, char *src, size_t size);
 size_t	ft_strlen(char const *str);
-void	ft_bzero(char *s, size_t n);
+size_t	ft_wcslen(const wchar_t *wcs);
+void	ft_bzero(void *s, size_t n);
 void	*ft_memalloc(size_t size);
 void	*ft_memccpy(void *dst, void *src, int c, size_t n);
 void	*ft_memchr(void *s, int c, size_t n);

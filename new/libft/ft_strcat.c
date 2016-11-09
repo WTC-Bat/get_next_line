@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/15 15:09:22 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/15 15:09:39 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/09 10:23:44 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/09 10:23:46 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl(char const *s)
+char	*ft_strcat(char *dest, char *src)
 {
-	if (s)
+	int		cnt;
+	int		len;
+
+	cnt = 0;
+	len = ft_strlen(dest);
+	while (src[cnt])
 	{
-		while (*s)
-			ft_putchar(*s++);
-		ft_putchar('\n');
+		dest[cnt + len] = src[cnt];
+		cnt++;
 	}
+	dest[cnt + len] = '\0';
+	return (dest);
 }

@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_indexof.c                                       :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvanwyk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/31 17:12:52 by mvanwyk           #+#    #+#             */
-/*   Updated: 2016/05/31 17:12:56 by mvanwyk          ###   ########.fr       */
+/*   Created: 2016/05/09 11:14:39 by mvanwyk           #+#    #+#             */
+/*   Updated: 2016/05/09 11:16:13 by mvanwyk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_indexof(char const *str, int c)
+int		ft_isascii(int c)
 {
-	int		cnt;
-
-	cnt = 0;
-	while (str[cnt])
-	{
-		if (str[cnt] == c)
-			return (cnt);
-		cnt++;
-	}
-	return (0);
+	if (c >= 0 && c <= 127)
+		return (1);
+	else
+		return (0);
 }
