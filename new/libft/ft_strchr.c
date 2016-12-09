@@ -21,20 +21,9 @@ char	*ft_strchr(char *s, int c)
 	while (len != 0)
 	{
 		if (*s == c)
-			// return (*s);
 			return (s);
 		len--;
 		s++;
 	}
 	return (0);
-
-
-
-	// while (*s)
-	// {
-	// 	if (*s == c)
-	// 		return (s);
-	// 	s++;
-	// }
-	// return (0);
 }

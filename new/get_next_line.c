@@ -10,42 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+**	-1	:	Error
+**	 0	:	All lines read. Complete
+**	 1	:	Single line read
+*/
+
 #include "get_next_line.h"
-#include <fcntl.h>
+
+static void	fill_buff(const int fd, char *buff)
+{
+	int		cnt;
+
+	cnt = 0;
+	while (cnt < (BUFF_SIZE - 1))
+	{
+		read(fd, &buff[cnt], 1);
+		// if (ft_indexof(buff, '\n') == 1)
+		// 	break;
+		if (buff[cnt] == '\n')
+			break;
+		cnt++;
+	}
+}
+
+int		get_next_line(const int fd, char **line)
+{
+	char	buff[BUFF_SIZE];
+	int		status;
+
+	status = 1;
+	while (ft_indexof(buff, '\n') == -1)
+	{
+		ft_memset(buff, 0, BUFF_SIZE);
+		fill_buff(fd, &buff[0]);
+		ft_putendl(buff);
+	}
+	return (42);
+}
+
+/*Basic Idea*/
 
 // int		get_next_line(const int fd, char **line)
 // {
-// 	char	chr;
-// 	char	*ln;
-// 	ssize_t	rb;
+// 	char	buff[BUFF_SIZE];
+// 	char	*l;
+// 	int		cnt;
 //
-// 	while (chr != '\n')
+// 	cnt = 0;
+// 	line = NULL;
+// 	ft_memset(buff, 0, BUFF_SIZE);
+// 	while (cnt < BUFF_SIZE - 1)
 // 	{
-// 		rb = read(fd, &chr, 1);
-// 		ln = ft_strjoin(ln, &chr);
-// 		ft_putchar(chr);
+// 		read(fd, &buff[cnt], 1);
+// 		cnt++;
 // 	}
-// 	ft_putendl(ln);
 // 	return (42);
 // }
-
-static int	indexof(char *str, char ch)
-{
-	int		idx;
-
-	idx = 0;
-	while (str[idx] != '\0')
-	{
-		if (str[idx] == ch)
-			return (idx);
-		idx++;
-	}
-	return (-1);
-}
-
-int			get_next_line(const int fd, char **line)
-{
-	static char		*reads;
-
-
-}
