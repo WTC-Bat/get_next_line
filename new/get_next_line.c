@@ -18,7 +18,7 @@
 
 #include "get_next_line.h"
 
-static void	fill_buff(const int fd, char *buff)
+static int	fill_buff(const int fd, char *buff)
 {
 	int		cnt;
 
@@ -26,28 +26,69 @@ static void	fill_buff(const int fd, char *buff)
 	while (cnt < (BUFF_SIZE - 1))
 	{
 		read(fd, &buff[cnt], 1);
-		// if (ft_indexof(buff, '\n') == 1)
-		// 	break;
-		if (buff[cnt] == '\n')
-			break;
+		if (buff[cnt] == '\n')	// if (ft_indexof(buff, '\n') == 1)
+			return (1);
+		else if (buff[cnt] == '\0')	//May not always get checked
+			return (0);
 		cnt++;
 	}
+	return (42);
 }
 
-int		get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
 	char	buff[BUFF_SIZE];
 	int		status;
 
-	status = 1;
-	while (ft_indexof(buff, '\n') == -1)
+	status = 42;
+	while (status != 0 && status != 1)	//&& status != -1 ?
 	{
 		ft_memset(buff, 0, BUFF_SIZE);
-		fill_buff(fd, &buff[0]);
-		ft_putendl(buff);
+		status = fill_buff(fd, &buff[0]);
+		if (ft_indexof(buff, '\n') > -1)
+			status = 1;
 	}
-	return (42);
+	return (status);
 }
+
+/*
+**	T1
+*/
+
+// #include "get_next_line.h"
+//
+// static void	fill_buff(const int fd, char *buff)
+// {
+// 	int		cnt;
+//
+// 	cnt = 0;
+// 	while (cnt < (BUFF_SIZE - 1))
+// 	{
+// 		read(fd, &buff[cnt], 1);
+// 		if (buff[cnt] == '\n')	// if (ft_indexof(buff, '\n') == 1)
+// 			break;
+// 		cnt++;
+// 	}
+// }
+//
+// int		get_next_line(const int fd, char **line)
+// {
+// 	char	buff[BUFF_SIZE];
+// 	int		status;
+// 	int		line_read;
+//
+// 	status = 1;
+// 	line_read = 0;
+// 	// while (ft_indexof(buff, '\n') == -1)
+// 	while (line_read == 0)
+// 	{
+// 		ft_memset(buff, 0, BUFF_SIZE);
+// 		fill_buff(fd, &buff[0]);
+// 		if (ft_indexof(buff, '\n') > -1)
+// 			line_read = 1;
+// 	}
+// 	return (42);
+// }
 
 /*Basic Idea*/
 
