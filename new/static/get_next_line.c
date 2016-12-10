@@ -65,12 +65,12 @@ int			get_next_line(const int fd, char **line)
 		status = fill_buff(fd, buff);
 		text = ft_strcat(text, buff);
 	}
-	rtext = ft_strtrim(text);
-	ft_putendl(rtext);
+	// rtext = ft_strtrim(text);
+	// ft_putendl(rtext);
 	// ft_strdel(&text);
-	ft_putendl(text);
+	// ft_putendl(text);
 
-	// lines = ft_strsplit(rtext, '\n');
+	lines = ft_strsplit(text, '\n');
 
 	// int i = 0;
 	// while (lines[i] != NULL)

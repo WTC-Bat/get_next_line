@@ -56,8 +56,11 @@ char		**ft_strsplit(char const *s, char c)
 		{
 			if (s[scnt - 1] == c && scnt > 0)
 				start = scnt;
-			else if (s[scnt + 1] == c || s[scnt + 1] == '\0')
+			if (s[scnt + 1] == '\0' || s[scnt + 1] == c)
+			{
 				strs[strcnt] = get_word(s, scnt, start);
+				strcnt++;
+			}
 		}
 		scnt++;
 	}
