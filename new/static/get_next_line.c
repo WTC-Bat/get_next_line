@@ -70,6 +70,7 @@ int			get_next_line(const int fd, char **line)
 	// ft_strdel(&text);
 	// ft_putendl(text);
 
+	//'text' needs "cleaning"?
 	lines = ft_strsplit(text, '\n');
 
 	// int i = 0;
