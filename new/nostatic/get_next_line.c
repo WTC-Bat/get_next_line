@@ -27,27 +27,42 @@ static int	fill_buff(const int fd, char *buff)
 	{
 		read(fd, &buff[cnt], 1);
 		if (buff[cnt] == '\n')	// if (ft_indexof(buff, '\n') == 1)
+		{
+			buff[cnt] = '\0';
 			return (1);
+		}
 		else if (buff[cnt] == '\0')	//May not always get checked
 			return (0);
 		cnt++;
 	}
+	buff[cnt] = '\0';
 	return (42);
 }
 
 int			get_next_line(const int fd, char **line)
 {
 	char	buff[BUFF_SIZE];
+	char	*l;
 	int		status;
 
+	if ((l = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
+		return (-1);
 	status = 42;
-	while (status != 0 && status != 1)	//&& status != -1 ?
+	// while (status != 0 && status != 1)	//&& status != -1 ?
+	while (status == 42)
 	{
-		ft_memset(buff, 0, BUFF_SIZE);
+		ft_memset(buff, '\0', BUFF_SIZE);
 		status = fill_buff(fd, &buff[0]);
-		if (ft_indexof(buff, '\n') > -1)
-			status = 1;
+		l = ft_strcat(l, buff);
+		if (status == 42)
+			l = ft_strcat(l, buff);
+		else if (status == 1 && buff[0] != '\n')
+			l = ft_strcat(l, buff);
+		else if (status == 0 && buff[0] != '\0')
+			l = ft_strcat(l, buff);
 	}
+	*line = ft_strdup(l);
+	ft_strdel(&l);
 	return (status);
 }
 
