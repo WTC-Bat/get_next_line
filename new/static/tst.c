@@ -4,11 +4,13 @@
 int		main(void)
 {
 	int		fd;
-	char	**line;
+	char	*line;
 
+	if ((line = (char *)malloc(sizeof(char) * 1024)) == NULL)
+		return (1);
 	fd = open("./desert", O_RDONLY);
-	get_next_line(fd, line);
-	// ft_putendl(*line);
+	get_next_line(fd, &line);
+	ft_putendl(line);
 	close(fd);
 
 	// fd = open("./desert", O_RDONLY);
