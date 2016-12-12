@@ -16,70 +16,21 @@
 **	 1	:	Single line read
 */
 
-/*???*/
-
-// #include "get_next_line.h"
-
-// static int	fill_buff(const int fd, char *buff)
-// {
-// 	int		cnt;
-// 	int		status;
-//
-// 	cnt = 0;
-// 	status = 42;
-// 	while (cnt < BUFF_SIZE - 1)
-// 	{
-// 		read(fd, &buff[cnt], 1);
-// 		if (buff[cnt] == '\0')
-// 		{
-// 			return (0);
-// 		}
-// 		if (buff[cnt] == '\n')
-// 		{
-// 			return (1);
-// 		}
-// 		cnt++;
-// 	}
-// 	buff[cnt] = '\0';
-// 	return (42);
-// }
-//
-// int			get_next_line(const int fd, char **line)
-// {
-// 	char		buff[BUFF_SIZE];
-// 	char		*text;
-// 	int			status;
-// 	// char		**lines;
-//
-// 	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
-// 		return (-1);
-// 	status = 42;
-// 	// if (!pos)
-// 	// 	pos = 0;
-// 	while (status != 0)
-// 	{
-// 		ft_memset(buff, '\0', BUFF_SIZE);
-// 		status = fill_buff(fd, buff);
-// 		text = ft_strcat(text, buff);
-// 		ft_putendl(text);
-// 		if (status == 1)
-// 		{
-// 			*line = ft_strdup(text);
-// 			ft_strclr(text);
-// 			// ft_putendl(*lines);
-// 			// lines++;
-// 		}
-// 	}
-//
-// 	return (0);
-// }
-
-/*Read All Text*/
-
 #include "get_next_line.h"
 
+static void	free_lines(char **lines)
+{
+	int		cnt;
+
+	cnt = 0;
+	while (lines[cnt] != NULL)
+	{
+		ft_strdel(&lines[cnt]);
+		cnt++;
+	}
+}
+
 static int	fill_buff(const int fd, char *buff)
-// static void	fill_buff(const int fd, char *buff)
 {
 	int		cnt;
 	int		status;
@@ -96,49 +47,127 @@ static int	fill_buff(const int fd, char *buff)
 		cnt++;
 	}
 	buff[cnt] = '\0';
-	// return (status);
 	return (42);
 }
 
-// static char	*get_text(const int fd)
-// {
-//
-// }
-
-int			get_next_line(const int fd, char **line)
+static char	*get_text(const int fd)
 {
-	char		buff[BUFF_SIZE];
-	char		*text;
-	int			status;
-	static int	pos;
-	char		**lines;
-	char		*rtext;
+	char	buff[BUFF_SIZE];
+	char	*text;
+	int		status;
 
 	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL) //+1?
-		return (-1);
+		return (NULL);
 	status = 42;
-	if (!pos)
-		pos = 0;
 	while (status != 0)
 	{
 		ft_memset(buff, '\0', BUFF_SIZE);
 		status = fill_buff(fd, buff);
 		text = ft_strcat(text, buff);
 	}
-	rtext = ft_strtrim(text);
-	ft_putendl(rtext);
-	// ft_strdel(&text);
-	// ft_putendl(text);
-
-	//'text' needs "cleaning"?
-	// lines = ft_strsplit(text, '\n');
-
-	// int i = 0;
-	// while (lines[i] != NULL)
-	// {
-	// 	ft_putendl(lines[i]);
-	// 	ft_putchar('\n');
-	// 	i++;
-	// }
-	return (0);
+	return (text);
 }
+
+static char	**get_lines(char *text)
+{
+	int		cnt;
+	char	**lines;
+	char	**outlines;
+
+	if (text != NULL)
+	{
+		if ((outlines =
+			(char **)malloc(sizeof(*outlines) * ft_splitcnt(text, '\n') + 1)) ==
+			NULL)
+		{
+			return (NULL);
+		}
+		cnt = 0;
+		lines = ft_strsplit(text, '\n');
+		while (lines[cnt] != NULL)
+		{
+			outlines[cnt] = ft_strtrim(lines[cnt]);
+			cnt++;
+		}
+		free_lines(lines);
+		return (outlines);
+	}
+	return (NULL);
+}
+
+int			get_next_line(const int fd, char **line)
+{
+	static char	**lines;
+	char		*text;
+
+	if (fd < 0 || !line)
+		return (-1);
+	if (lines == NULL)
+	{
+		text = get_text(fd);
+		lines = get_lines(text);
+		ft_strdel(&text);
+	}
+
+	if (*lines == NULL)
+	{
+		return (0);
+	}
+	else
+	{
+		*line = ft_strdup(*lines);
+		lines++;
+		return (1);
+	}
+}
+
+
+
+
+
+/*Working so far, just needs organizing*/
+
+// #include "get_next_line.h"
+//
+// static int	fill_buff(const int fd, char *buff)
+// {
+// 	int		cnt;
+// 	int		status;
+//
+// 	cnt = 0;
+// 	status = 42;
+// 	while (cnt < BUFF_SIZE - 1)
+// 	{
+// 		read(fd, &buff[cnt], 1);
+// 		if (buff[cnt] == '\0')
+// 		{
+// 			return (0);
+// 		}
+// 		cnt++;
+// 	}
+// 	buff[cnt] = '\0';
+// 	return (42);
+// }
+//
+// int			get_next_line(const int fd, char **line)
+// {
+// 	char		buff[BUFF_SIZE];
+// 	char		*text;
+// 	int			status;
+// 	static int	pos;
+// 	char		**lines;
+//
+// 	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL) //+1?
+// 		return (-1);
+// 	status = 42;
+// 	if (!pos)
+// 		pos = 0;
+// 	while (status != 0)
+// 	{
+// 		ft_memset(buff, '\0', BUFF_SIZE);
+// 		status = fill_buff(fd, buff);
+// 		text = ft_strcat(text, buff);
+// 	}
+// 	lines = ft_strsplit(text, '\n');
+// 	return (0);
+// }
