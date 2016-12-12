@@ -1,1 +1,5 @@
 this gnl attempts the bonus parts
+
+alternatively:
+instead of filling '**lines', just get all the text, and loop through it
+returning text up to the next new line
