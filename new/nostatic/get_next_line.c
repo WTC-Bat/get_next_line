@@ -18,6 +18,17 @@
 
 #include "get_next_line.h"
 
+// static int	fill_buff(const int fd, char *buff)
+// {
+// 	int		status;
+// 	// int		rb;
+// 	int		nidx;
+//
+// 	status = 42;
+// 	read(fd, buff, BUFF_SIZE);
+// 	cnt++;
+// }
+
 static void	free_lines(char **lines)
 {
 	int		cnt;
@@ -30,48 +41,101 @@ static void	free_lines(char **lines)
 	}
 }
 
-static int	fill_buff(const int fd, char *buff)
+static char	**get_lines(char *text)
 {
 	int		cnt;
-	int		status;
+	char	**lines;
+	char	**outlines;
 
-	cnt = 0;
-	status = 42;
-	while (cnt < BUFF_SIZE - 1)
+	if (text != NULL)
 	{
-		read(fd, &buff[cnt], 1);
-		if (buff[cnt] == '\n')
+		if ((outlines =
+			(char **)malloc(sizeof(*outlines) * ft_splitcnt(text, '\n') + 1)) ==
+			NULL)
 		{
-			buff[cnt] = '\0';
-			return (1);
+			return (NULL);
 		}
-		if (buff[cnt] == '\0')
-			return (0);
-		cnt++;
+		cnt = 0;
+		lines = ft_strsplit(text, '\n');
+		while (lines[cnt] != NULL)
+		{
+			outlines[cnt] = ft_strtrim(lines[cnt]);
+			cnt++;
+		}
+		free_lines(lines);
+		return (outlines);
 	}
-	buff[cnt] = '\0';
-	return (42);
+	return (NULL);
 }
 
 int			get_next_line(const int fd, char **line)
 {
-	char		*l;
 	char		buff[BUFF_SIZE];
-	int			status;
+	char		*text;
+	char		**lines;
+	int			nidx;
 
-	if (fd < 0 || !line || BUFF_SIZE < 1)
+	char		*rtext;
+
+	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE + 1)) == NULL)
 		return (-1);
-	if ((l = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
-		return (-1);
-	status = 42;
-	while (status == 42)
+	ft_memset(buff, '\0', BUFF_SIZE);
+	while (read(fd, buff, BUFF_SIZE - 1) > 0)		//-1?
 	{
-		// ft_memset(buff, '\0', BUFF_SIZE);
-
-		status = fill_buff(fd, &buff[0]);
-		l = ft_strcat(l, buff);
+		text = ft_strcat(text, buff);
+		ft_memset(buff, '\0', BUFF_SIZE);
 	}
-	*line = ft_strdup(l);
-	ft_strdel(&l);
-	return (status);
+	lines = get_lines(text);
+	return (0);
 }
+
+
+
+
+/*ERRORING*/
+
+// #include "get_next_line.h"
+//
+// static int	fill_buff(const int fd, char *buff)
+// {
+// 	int		cnt;
+// 	int		status;
+//
+// 	cnt = 0;
+// 	status = 42;
+// 	while (cnt < BUFF_SIZE - 1)
+// 	{
+// 		read(fd, &buff[cnt], 1);
+// 		if (buff[cnt] == '\n')
+// 		{
+// 			buff[cnt] = '\0';
+// 			return (1);
+// 		}
+// 		if (buff[cnt] == '\0')
+// 			return (0);
+// 		cnt++;
+// 	}
+// 	buff[cnt] = '\0';
+// 	return (42);
+// }
+//
+// int			get_next_line(const int fd, char **line)
+// {
+// 	char		*l;
+// 	char		buff[BUFF_SIZE];
+// 	int			status;
+//
+// 	if (fd < 0 || *line == NULL || BUFF_SIZE < 1)
+// 		return (-1);
+// 	if ((l = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
+// 		return (-1);
+// 	status = 42;
+// 	while (status == 42)
+// 	{
+// 		status = fill_buff(fd, &buff[0]);
+// 		l = ft_strcat(l, buff);
+// 	}
+// 	*line = ft_strdup(l);
+// 	ft_strdel(&l);
+// 	return (status);
+// }

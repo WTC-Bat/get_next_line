@@ -16,6 +16,8 @@
 **	 1	:	Single line read
 */
 
+/*ERRORING*/
+
 #include "get_next_line.h"
 
 static void	free_lines(char **lines)
