@@ -69,25 +69,47 @@
 // 	return (NULL);
 // }
 
+static char	**get_lines(char *text)
+{
+	int		cnt;
+	char	**lines;
+	char	**outlines;
+
+	if (text != NULL)
+	{
+		if ((outlines =
+			(char **)malloc(sizeof(*outlines) * ft_splitcnt(text, '\n') + 1)) ==
+			NULL)
+		{
+			return (NULL);
+		}
+		cnt = 0;
+		lines = ft_strsplit(text, '\n');
+		while (lines[cnt] != NULL)
+		{
+			outlines[cnt] = ft_strtrim(lines[cnt]);
+			cnt++;
+		}
+		// free_lines(lines);
+		// free(lines);
+		return (outlines);
+	}
+	return (NULL);
+}
+
 int			get_next_line(const int fd, char **line)
 {
-	char	*buff;
+	char	buff[BUFF_SIZE];
 	char	*text;
-	char	**lines;
 
-	if ((buff = (char *)malloc(sizeof(char) * BUFF_SIZE + 1)) == NULL)
+	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
 		return (-1);
-	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE + 1)) == NULL)
-		return (-1);
-	while (read(fd, buff, BUFF_SIZE) > 0)	//?
+	while (read(fd, buff, BUFF_SIZE - 1) > 0)
 	{
-		buff[BUFF_SIZE] = '\0';
+		buff[BUFF_SIZE - 1] = '\0';
 		text = ft_strcat(text, buff);
 	}
-	lines = (char **)malloc(sizeof(*lines) * ft_splitcnt(text, '\n') + 1);
-	if (lines == NULL)
-		return (-1);
-	lines = ft_strsplit(text, '\n');
+
 	return (0);
 }
 
