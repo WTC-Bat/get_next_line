@@ -18,20 +18,34 @@
 
 #include "get_next_line.h"
 
-static int	fill_buff(const int fd, char *buff)
+static void	free_lines(char **lines)
 {
 	int		cnt;
 
 	cnt = 0;
-	while (cnt < (BUFF_SIZE - 1))
+	while (lines[cnt] != NULL)
+	{
+		ft_strdel(&lines[cnt]);
+		cnt++;
+	}
+}
+
+static int	fill_buff(const int fd, char *buff)
+{
+	int		cnt;
+	int		status;
+
+	cnt = 0;
+	status = 42;
+	while (cnt < BUFF_SIZE - 1)
 	{
 		read(fd, &buff[cnt], 1);
-		if (buff[cnt] == '\n')	// if (ft_indexof(buff, '\n') == 1)
+		if (buff[cnt] == '\n')
 		{
 			buff[cnt] = '\0';
 			return (1);
 		}
-		else if (buff[cnt] == '\0')	//May not always get checked
+		if (buff[cnt] == '\0')
 			return (0);
 		cnt++;
 	}
@@ -41,85 +55,23 @@ static int	fill_buff(const int fd, char *buff)
 
 int			get_next_line(const int fd, char **line)
 {
-	char	buff[BUFF_SIZE];
-	char	*l;
-	int		status;
+	char		*l;
+	char		buff[BUFF_SIZE];
+	int			status;
 
+	if (fd < 0 || !line || BUFF_SIZE < 1)
+		return (-1);
 	if ((l = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
 		return (-1);
 	status = 42;
-	// while (status != 0 && status != 1)	//&& status != -1 ?
 	while (status == 42)
 	{
-		ft_memset(buff, '\0', BUFF_SIZE);
+		// ft_memset(buff, '\0', BUFF_SIZE);
+
 		status = fill_buff(fd, &buff[0]);
 		l = ft_strcat(l, buff);
-		if (status == 42)
-			l = ft_strcat(l, buff);
-		else if (status == 1 && buff[0] != '\n')
-			l = ft_strcat(l, buff);
-		else if (status == 0 && buff[0] != '\0')
-			l = ft_strcat(l, buff);
 	}
 	*line = ft_strdup(l);
 	ft_strdel(&l);
 	return (status);
 }
-
-/*
-**	T1
-*/
-
-// #include "get_next_line.h"
-//
-// static void	fill_buff(const int fd, char *buff)
-// {
-// 	int		cnt;
-//
-// 	cnt = 0;
-// 	while (cnt < (BUFF_SIZE - 1))
-// 	{
-// 		read(fd, &buff[cnt], 1);
-// 		if (buff[cnt] == '\n')	// if (ft_indexof(buff, '\n') == 1)
-// 			break;
-// 		cnt++;
-// 	}
-// }
-//
-// int		get_next_line(const int fd, char **line)
-// {
-// 	char	buff[BUFF_SIZE];
-// 	int		status;
-// 	int		line_read;
-//
-// 	status = 1;
-// 	line_read = 0;
-// 	// while (ft_indexof(buff, '\n') == -1)
-// 	while (line_read == 0)
-// 	{
-// 		ft_memset(buff, 0, BUFF_SIZE);
-// 		fill_buff(fd, &buff[0]);
-// 		if (ft_indexof(buff, '\n') > -1)
-// 			line_read = 1;
-// 	}
-// 	return (42);
-// }
-
-/*Basic Idea*/
-
-// int		get_next_line(const int fd, char **line)
-// {
-// 	char	buff[BUFF_SIZE];
-// 	char	*l;
-// 	int		cnt;
-//
-// 	cnt = 0;
-// 	line = NULL;
-// 	ft_memset(buff, 0, BUFF_SIZE);
-// 	while (cnt < BUFF_SIZE - 1)
-// 	{
-// 		read(fd, &buff[cnt], 1);
-// 		cnt++;
-// 	}
-// 	return (42);
-// }
