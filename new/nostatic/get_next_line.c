@@ -18,233 +18,73 @@
 
 #include "get_next_line.h"
 
-// static int	fill_buff(const int fd, char *buff)
-// {
-// 	int		status;
-// 	// int		rb;
-// 	int		nidx;
-//
-// 	status = 42;
-// 	read(fd, buff, BUFF_SIZE);
-// 	cnt++;
-// }
-
-// static void	free_lines(char **lines)
-// {
-// 	int		cnt;
-//
-// 	cnt = 0;
-// 	while (lines[cnt] != NULL)
-// 	{
-// 		ft_strdel(&lines[cnt]);
-// 		cnt++;
-// 	}
-// }
-//
-// static char	**get_lines(char *text)
-// {
-// 	int		cnt;
-// 	char	**lines;
-// 	char	**outlines;
-//
-// 	if (text != NULL)
-// 	{
-// 		if ((outlines =
-// 			(char **)malloc(sizeof(*outlines) * ft_splitcnt(text, '\n') + 1)) ==
-// 			NULL)
-// 		{
-// 			return (NULL);
-// 		}
-// 		cnt = 0;
-// 		lines = ft_strsplit(text, '\n');
-// 		while (lines[cnt] != NULL)
-// 		{
-// 			outlines[cnt] = ft_strtrim(lines[cnt]);
-// 			cnt++;
-// 		}
-// 		// free_lines(lines);
-// 		// free(lines);
-// 		return (outlines);
-// 	}
-// 	return (NULL);
-// }
-
-static char	**get_lines(char *text)
+static int	get_len(char *text, int *status, size_t pos)
 {
-	int		cnt;
-	char	**lines;
-	char	**outlines;
+	size_t	idx;
+	size_t	len;
 
-	if (text != NULL)
+	idx = pos;
+	len = 0;
+	while (text[idx] != '\n' && text[idx] != '\0')
 	{
-		if ((outlines =
-			(char **)malloc(sizeof(*outlines) * ft_splitcnt(text, '\n') + 1)) ==
-			NULL)
-		{
-			return (NULL);
-		}
-		cnt = 0;
-		lines = ft_strsplit(text, '\n');
-		while (lines[cnt] != NULL)
-		{
-			outlines[cnt] = ft_strtrim(lines[cnt]);
-			cnt++;
-		}
-		// free_lines(lines);
-		// free(lines);
-		return (outlines);
+		idx++;
+		len++;
 	}
-	return (NULL);
+	if (text[idx] == '\n')
+		*status = 1;
+	else if (text[idx] == '\0')
+		*status = 0;
+	return (len);
 }
 
+static char	*read_line(char *text, int *status, size_t *pos)
+{
+	size_t			idx;
+	size_t			len;
+	char			*line;
+	unsigned int	upos;
+
+	upos = (unsigned int)(*pos);
+	len = get_len(text, status, *pos);
+	ft_putendl("GOT LEN");
+	line = ft_strsub(text, upos, len);
+	ft_putendl("SUBBED");
+	*pos += (len + 1);
+	return (line);
+}
+
+/*Successfully aquires all text from fd*/
 int			get_next_line(const int fd, char **line)
 {
-	char	buff[BUFF_SIZE];
-	char	*text;
+	char			buff[BUFF_SIZE];
+	char			*text;
+	int				status;
+	static size_t	pos;
+	char			**lines;
 
-	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
+	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)	//+1?
 		return (-1);
+	status = 42;
+	ft_memset(buff, '\0', BUFF_SIZE);
 	while (read(fd, buff, BUFF_SIZE - 1) > 0)
 	{
-		buff[BUFF_SIZE - 1] = '\0';
 		text = ft_strcat(text, buff);
+		ft_memset(buff, '\0', BUFF_SIZE);
 	}
+	ft_putendl("LINES");
+	//
+	if ((lines = (char **)malloc(sizeof(*lines) * ft_splitcnt(text, '\n') + 1)) == NULL)
+		return (-1);
+	lines = ft_strsplit(text, '\n');
+	ft_strdel(&text);
+	free(lines);
+	//
+	// ft_putendl("READING LINE");
+	// *line = read_line(text, &status, &pos);
+	// ft_strdel(&text);
+	// ft_putendl("LINE: ");
+	// ft_putendl(*line);
 
 	return (0);
+	// return (status);
 }
-
-/*ALSO*/
-
-// #include "get_next_line.h"
-
-// static int	fill_buff(const int fd, char *buff)
-// {
-// 	int		status;
-// 	// int		rb;
-// 	int		nidx;
-//
-// 	status = 42;
-// 	read(fd, buff, BUFF_SIZE);
-// 	cnt++;
-// }
-
-// static void	free_lines(char **lines)
-// {
-// 	int		cnt;
-//
-// 	cnt = 0;
-// 	while (lines[cnt] != NULL)
-// 	{
-// 		ft_strdel(&lines[cnt]);
-// 		cnt++;
-// 	}
-// }
-//
-// static char	**get_lines(char *text)
-// {
-// 	int		cnt;
-// 	char	**lines;
-// 	char	**outlines;
-//
-// 	if (text != NULL)
-// 	{
-// 		if ((outlines =
-// 			(char **)malloc(sizeof(*outlines) * ft_splitcnt(text, '\n') + 1)) ==
-// 			NULL)
-// 		{
-// 			return (NULL);
-// 		}
-// 		cnt = 0;
-// 		lines = ft_strsplit(text, '\n');
-// 		while (lines[cnt] != NULL)
-// 		{
-// 			outlines[cnt] = ft_strtrim(lines[cnt]);
-// 			cnt++;
-// 		}
-// 		// free_lines(lines);
-// 		// free(lines);
-// 		return (outlines);
-// 	}
-// 	return (NULL);
-// }
-//
-// int			get_next_line(const int fd, char **line)
-// {
-// 	char		buff[BUFF_SIZE];
-// 	char		*text;
-// 	char		**lines;
-// 	int			nidx;
-//
-// 	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE + 1)) == NULL)
-// 		return (-1);
-// 	ft_memset(buff, '\0', BUFF_SIZE);
-// 	while (read(fd, buff, BUFF_SIZE - 1) > 0)		//-1?
-// 	{
-// 		text = ft_strcat(text, buff);
-// 		ft_memset(buff, '\0', BUFF_SIZE);
-// 	}
-//
-// 	// lines = (char **)malloc(sizeof(*lines) * ft_splitcnt(text, '\n') + 1);
-// 	// if (lines == NULL)
-// 	// 	return (-1);
-// 	// lines = ft_strsplit(text, '\n');
-//
-// 	lines = get_lines(text);
-// 	if (lines == NULL)
-// 	{
-// 		return (-1);
-// 	}
-//
-// 	return (0);
-// }
-
-
-
-
-/*ERRORING*/
-
-// #include "get_next_line.h"
-//
-// static int	fill_buff(const int fd, char *buff)
-// {
-// 	int		cnt;
-// 	int		status;
-//
-// 	cnt = 0;
-// 	status = 42;
-// 	while (cnt < BUFF_SIZE - 1)
-// 	{
-// 		read(fd, &buff[cnt], 1);
-// 		if (buff[cnt] == '\n')
-// 		{
-// 			buff[cnt] = '\0';
-// 			return (1);
-// 		}
-// 		if (buff[cnt] == '\0')
-// 			return (0);
-// 		cnt++;
-// 	}
-// 	buff[cnt] = '\0';
-// 	return (42);
-// }
-//
-// int			get_next_line(const int fd, char **line)
-// {
-// 	char		*l;
-// 	char		buff[BUFF_SIZE];
-// 	int			status;
-//
-// 	if (fd < 0 || *line == NULL || BUFF_SIZE < 1)
-// 		return (-1);
-// 	if ((l = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)
-// 		return (-1);
-// 	status = 42;
-// 	while (status == 42)
-// 	{
-// 		status = fill_buff(fd, &buff[0]);
-// 		l = ft_strcat(l, buff);
-// 	}
-// 	*line = ft_strdup(l);
-// 	ft_strdel(&l);
-// 	return (status);
-// }

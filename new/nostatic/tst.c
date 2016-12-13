@@ -22,16 +22,18 @@ int		main(void)
 
 	if ((line = (char *)malloc(sizeof(char) * 1024)) == NULL)
 		return (1);
-	fd = open("./desert", O_RDONLY);
+	// fd = open("./desert", O_RDONLY);
+	fd = open("./gpl-3.0.txt", O_RDONLY);
 	while ((status = get_next_line(fd, &line)) != 0)
 	{
-		// if (status == -1)
-		// {
-		// 	ft_putendl("ERROR");
-		// }
-		// ft_putendl(line);
+		if (status == -1)
+		{
+			ft_putendl("ERROR");
+		}
+		ft_putendl(line);
+		ft_strclr(line);
 		// ft_strdel(&line);
-		line++;
+		// line++;
 	}
 	close(fd);
 
