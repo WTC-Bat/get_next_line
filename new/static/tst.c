@@ -28,7 +28,7 @@ int		main(void)
 	{
 		ft_putendl(line);
 		ft_strclr(line);
-		line++;
+		// line++;
 	}
 	close(fd);
 

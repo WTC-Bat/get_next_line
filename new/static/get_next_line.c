@@ -110,11 +110,8 @@ int			get_next_line(const int fd, char **line)
 		lines = get_lines(text);
 		ft_strdel(&text);
 	}
-
 	if (*lines == NULL)
-	{
 		return (0);
-	}
 	else
 	{
 		*line = ft_strdup(*lines);
