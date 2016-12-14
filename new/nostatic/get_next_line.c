@@ -46,9 +46,7 @@ static char	*read_line(char *text, int *status, size_t *pos)
 
 	upos = (unsigned int)(*pos);
 	len = get_len(text, status, *pos);
-	ft_putendl("GOT LEN");
 	line = ft_strsub(text, upos, len);
-	ft_putendl("SUBBED");
 	*pos += (len + 1);
 	return (line);
 }
@@ -56,35 +54,29 @@ static char	*read_line(char *text, int *status, size_t *pos)
 /*Successfully aquires all text from fd*/
 int			get_next_line(const int fd, char **line)
 {
-	char			buff[BUFF_SIZE];
-	char			*text;
-	int				status;
-	static size_t	pos;
-	char			**lines;
+	char		buff[BUFF_SIZE];
+	char		*text;
+	int			status;
+	static int	pos;
+	char		**lines;
 
 	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE)) == NULL)	//+1?
 		return (-1);
 	status = 42;
+	pos = 0;
 	ft_memset(buff, '\0', BUFF_SIZE);
 	while (read(fd, buff, BUFF_SIZE - 1) > 0)
 	{
 		text = ft_strcat(text, buff);
 		ft_memset(buff, '\0', BUFF_SIZE);
 	}
-	ft_putendl("LINES");
-	//
-	if ((lines = (char **)malloc(sizeof(*lines) * ft_splitcnt(text, '\n') + 1)) == NULL)
+	if ((lines = ft_strsplit(text, '\n')) == NULL)
 		return (-1);
-	lines = ft_strsplit(text, '\n');
-	ft_strdel(&text);
-	free(lines);
-	//
-	// ft_putendl("READING LINE");
-	// *line = read_line(text, &status, &pos);
-	// ft_strdel(&text);
-	// ft_putendl("LINE: ");
-	// ft_putendl(*line);
-
-	return (0);
-	// return (status);
+	if (lines[pos] == NULL)
+		return (0);
+	else
+	{
+		*line = lines[pos++];
+		return (1);
+	}
 }
