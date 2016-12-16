@@ -20,6 +20,8 @@ int		main(void)
 	// ft_putendl(line);
 	// close(fd);
 
+
+
 	if ((line = (char *)malloc(sizeof(char) * 1024)) == NULL)
 		return (1);
 	fd = open("./desert", O_RDONLY);
@@ -31,6 +33,12 @@ int		main(void)
 		// line++;
 	}
 	close(fd);
+
+
+	// fd = open("./desert", O_RDONLY);
+	// get_next_line(fd, &line);
+	// close(fd);
+
 
 	return (0);
 }
