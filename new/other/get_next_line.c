@@ -41,7 +41,7 @@ static char	*read_line(t_fd *tfd)
 		return (NULL);
 	ft_putendl("SUB");
 	line = ft_strsub(tfd->text, tfd->pos, len);
-	tfd->pos += len + 1;
+	tfd->pos += len;	//+ 1?
 	return (line);
 }
 
