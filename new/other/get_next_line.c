@@ -24,12 +24,6 @@ static char	*read_line(t_fd *tfd)
 	size_t	len;
 	size_t	idx;
 
-	// while (tfd != NULL)
-	// {
-	// 	if (tfd->fd == fd)
-	// 		break;
-	// 	tfd = tfd->next;
-	// }
 	len = 0;
 	idx = tfd->pos;
 	while (tfd->text[idx] != '\0' && tfd->text[idx] != '\n')
@@ -37,11 +31,11 @@ static char	*read_line(t_fd *tfd)
 		len++;
 		idx++;
 	}
-	if (len == 0 || (tfd->pos == ft_strlen(tfd->text)))
+	if (len == 0 || (tfd->pos == (ft_strlen(tfd->text) - 1)))
 		return (NULL);
-	ft_putendl("SUB");
+	//Check length is not past end
 	line = ft_strsub(tfd->text, tfd->pos, len);
-	tfd->pos += len;	//+ 1?
+	tfd->pos = idx + 1;	//+ 1?
 	return (line);
 }
 
@@ -107,7 +101,7 @@ int			get_next_line(const int fd, char **line)
 	l = read_line(tfd);
 	if (l == NULL)
 		return (0);
-	if (tfd->pos == ft_strlen(tfd->text))
+	if (tfd->pos == (ft_strlen(tfd->text) - 1))
 		status = 0;
 	else
 		status = 1;
