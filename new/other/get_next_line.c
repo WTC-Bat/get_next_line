@@ -106,6 +106,7 @@ int			get_next_line(const int fd, char **line)
 	else
 		status = 1;
 	*line = l;
+	// ft_strdel(&l);	
 	return (status);
 }
 
