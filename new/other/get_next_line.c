@@ -31,7 +31,7 @@ static char	*read_line(t_fd *tfd)
 		len++;
 		idx++;
 	}
-	if (len == 0 || (tfd->pos == (ft_strlen(tfd->text) - 1)))
+	if (len == 0 || (tfd->pos == (ft_strlen(tfd->text))))	//-1?
 		return (NULL);
 	//Check length is not past end
 	line = ft_strsub(tfd->text, tfd->pos, len);
@@ -98,15 +98,21 @@ int			get_next_line(const int fd, char **line)
 			break;
 		tfd = tfd->next;
 	}
+	ft_putendl(tfd->text);
 	l = read_line(tfd);
+	// ft_putendl(l);
 	if (l == NULL)
 		return (0);
 	if (tfd->pos == (ft_strlen(tfd->text) - 1))
+	{
 		status = 0;
+		//free tfd?
+		ft_strdel(&(tfd)->text);
+	}
 	else
 		status = 1;
 	*line = l;
-	// ft_strdel(&l);	
+	ft_strdel(&l);
 	return (status);
 }
 
