@@ -18,6 +18,7 @@
 
 #include "get_next_line.h"
 
+//tfd->pos is not directly used here!!
 static char	*read_line(t_fd *tfd)
 {
 	char	*line;
@@ -31,11 +32,11 @@ static char	*read_line(t_fd *tfd)
 		len++;
 		idx++;
 	}
-	if (len == 0 || (tfd->pos == (ft_strlen(tfd->text))))	//-1?
+	if (len == 0 || (idx == (ft_strlen(tfd->text))))	//-1?
 		return (NULL);
-	//Check length is not past end
-	line = ft_strsub(tfd->text, tfd->pos, len);
-	tfd->pos = idx + 1;	//+ 1?
+	//Check length is no  past end. Also check on idx
+	line = ft_strsub(tfd->text, idx, len);
+	tfd->pos = idx;	//+ 1?
 	return (line);
 }
 
@@ -98,7 +99,7 @@ int			get_next_line(const int fd, char **line)
 			break;
 		tfd = tfd->next;
 	}
-	ft_putendl(tfd->text);
+	// ft_putendl(tfd->text);
 	l = read_line(tfd);
 	// ft_putendl(l);
 	if (l == NULL)

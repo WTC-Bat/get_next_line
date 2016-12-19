@@ -28,8 +28,8 @@ int		main(void)
 	// fd = open("./gpl-3.0.txt", O_RDONLY);
 	while (get_next_line(fd, &line) != 0)
 	{
-		// ft_putendl(line);
-		// ft_strclr(line);
+		ft_putendl(line);
+		ft_strclr(line);
 		// line++;
 	}
 	close(fd);
