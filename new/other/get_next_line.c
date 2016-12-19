@@ -18,10 +18,31 @@
 
 #include "get_next_line.h"
 
-//tfd->pos is not directly used here!!
+// static char	*read_line(t_fd *tfd)
+// {
+// 	char	*line;
+// 	size_t	len;
+// 	size_t	idx;
+//
+// 	len = 0;
+// 	idx = tfd->pos;
+// 	while (tfd->text[idx] != '\0' && tfd->text[idx] != '\n')
+// 	{
+// 		len++;
+// 		idx++;
+// 	}
+// 	// if (len == 0 || (tfd->pos == (ft_strlen(tfd->text))))	//-1?
+// 	if (len == 0)
+// 		return (NULL);
+// 	//Check length is not past end. Also check on idx
+// 	line = ft_strsub(tfd->text, tfd->pos, len);
+// 	tfd->pos = idx + 1;
+// 	return (line);
+// }
+
 static char	*read_line(t_fd *tfd)
 {
-	char	*line;
+	char	*ln;
 	size_t	len;
 	size_t	idx;
 
@@ -32,13 +53,30 @@ static char	*read_line(t_fd *tfd)
 		len++;
 		idx++;
 	}
-	// if (len == 0 || (idx == (ft_strlen(tfd->text))))	//-1?
+	idx = 0;
 	if (len == 0)
 		return (NULL);
-	//Check length is not past end. Also check on idx
-	line = ft_strsub(tfd->text, tfd->pos, len);
-	tfd->pos = idx;	//+ 1?
-	return (line);
+	ft_putendl("HERE");
+	// if ((ln = (char *)malloc(sizeof(char) * len + 1)) == NULL)
+	// {
+	// 	ft_putendl("Malloc fail");
+	// 	return (NULL);
+	// }
+	ln = (char *)malloc(sizeof(char) * (len + 1));
+	if (ln == NULL)
+	{
+		ft_putendl("Malloc fail");
+		return (NULL);
+	}
+	ft_putendl("MALLOC'D");
+	while (tfd->text[tfd->pos] != '\0' && tfd->text[tfd->pos] != '\n')
+	{
+		ln[idx] = tfd->text[tfd->pos];
+		idx++;
+		tfd->pos++;
+	}
+	ln[idx] = '\0';
+	return (ln);
 }
 
 static char	*get_text(const int fd)
@@ -100,9 +138,7 @@ int			get_next_line(const int fd, char **line)
 			break;
 		tfd = tfd->next;
 	}
-	// ft_putendl(tfd->text);
 	l = read_line(tfd);
-	// ft_putendl(l);
 	if (l == NULL)
 		return (0);
 	if (tfd->pos == (ft_strlen(tfd->text) - 1))
@@ -114,42 +150,7 @@ int			get_next_line(const int fd, char **line)
 	else
 		status = 1;
 	*line = l;
+	// *line = ft_strdup(l);
 	ft_strdel(&l);
 	return (status);
 }
-
-
-
-
-
-
-// #include "get_next_line.h"
-//
-// static char	*get_text(const int fd)
-// {
-// 	char	buff[BUFF_SIZE + 1];
-// 	char	*text;
-//
-// 	if ((text = (char *)malloc(sizeof(char) * BUFF_SIZE + 1)) == NULL)
-// 		return (NULL);
-// 	ft_memset(buff, '\0', BUFF_SIZE + 1);
-// 	while (read(fd, buff, BUFF_SIZE) > 0)
-// 	{
-// 		if (text[0] == '\0')
-// 			text = ft_strdup(buff);
-// 		else
-// 			text = ft_strcat(text, buff);
-// 		ft_memset(buff, '\0', BUFF_SIZE + 1);
-// 	}
-// 	return (text);
-// }
-//
-// int			get_next_line(const int fd, char **line)
-// {
-// 	char	*text;
-//
-// 	text = get_text(fd);
-// 	ft_putendl("TEXT:");
-// 	ft_putendl(text);
-// 	return (0);
-// }
