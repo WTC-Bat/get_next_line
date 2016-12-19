@@ -32,10 +32,11 @@ static char	*read_line(t_fd *tfd)
 		len++;
 		idx++;
 	}
-	if (len == 0 || (idx == (ft_strlen(tfd->text))))	//-1?
+	// if (len == 0 || (idx == (ft_strlen(tfd->text))))	//-1?
+	if (len == 0)
 		return (NULL);
 	//Check length is not past end. Also check on idx
-	line = ft_strsub(tfd->text, idx, len);
+	line = ft_strsub(tfd->text, tfd->pos, len);
 	tfd->pos = idx;	//+ 1?
 	return (line);
 }
