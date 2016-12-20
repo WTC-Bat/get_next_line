@@ -25,7 +25,6 @@ static int	get_len(char *text, int *pos, int *status)
 
 	len = 0;
 	cnt = *pos;
-
 	while (text[cnt] != '\0')
 	{
 		if (text[cnt] == '\n')
@@ -45,6 +44,11 @@ static char	*read_line(char *text, int *pos, int *status)
 	int		len;
 	char	*ln;
 
+	if (ft_indexof(text, '\n') == -1)
+	{
+		*status = 0;
+		return (text);
+	}
 	len = get_len(text, pos, status);
 	ln = ft_strsub(text, *pos, len);
 	*pos += len + 1;
